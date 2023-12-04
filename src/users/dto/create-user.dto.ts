@@ -1,9 +1,28 @@
+import { IsNotEmpty, Length } from 'class-validator';
+import { Active, Local } from '../entities/user.entity';
+
 export class CreateUserDto {
-  id: string;
+  @IsNotEmpty()
+  @Length(3, 100)
   company_name: string;
+
+  @IsNotEmpty()
+  @Length(3, 100)
   fantasy_name: string;
+
+  @IsNotEmpty()
+  @Length(14, 14)
   cnpj: string;
-  local: number;
+
+  @IsNotEmpty()
+  local: Local;
+
+  @IsNotEmpty()
   opening_date: string;
-  active: number;
+
+  @IsNotEmpty()
+  active: Active;
+
+  @IsNotEmpty()
+  password: string;
 }

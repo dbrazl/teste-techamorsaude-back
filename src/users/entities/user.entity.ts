@@ -4,17 +4,15 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BeforeInsert,
-  BeforeUpdate,
 } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 
-enum Active {
+export enum Active {
   TRUE = 1,
   FALSE = 0,
 }
 
-enum Local {
+export enum Local {
   TRUE = 1,
   FALSE = 0,
 }
@@ -51,7 +49,7 @@ export class User {
   local: number;
 
   @Column({ type: 'datetime' })
-  opening_date: string;
+  opening_date: Date;
 
   @Column()
   active: number;
