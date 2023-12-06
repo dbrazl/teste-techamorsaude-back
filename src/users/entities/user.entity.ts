@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  BeforeInsert,
 } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 
@@ -42,7 +43,7 @@ export class User {
   @Column()
   fantasy_name: string;
 
-  @Column()
+  @Column({ unique: true })
   cnpj: string;
 
   @Column()
@@ -59,18 +60,22 @@ export class User {
   @Column()
   hash_password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updated_at: Date;
 
-  async hashPassword(password: string): Promise<string> {
-    return await hash(password, 12);
+  @BeforeInsert()
+  async hashPassword(): Promise<void> {
+    this.hash_password = await hash(this.password, 12);
   }
 
   async checkPassword(attempt: string): Promise<boolean> {
-    return await compare(attempt, this.password);
+    return await compare(attempt, this.hash_password);
   }
 
   getUserSpecialties(): any[] {

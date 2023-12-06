@@ -21,8 +21,6 @@ export class CreateUserDto {
   opening_date: string;
 
   @IsNotEmpty()
-  active: Active;
-
-  @IsNotEmpty()
+  @Length(6)
   password: string;
 }

@@ -9,7 +9,7 @@ import { User } from './users/entities/user.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
+      database: 'db.sqlite',
       entities: [User],
       synchronize: true,
     }),
