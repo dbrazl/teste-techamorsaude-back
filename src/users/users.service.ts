@@ -17,8 +17,16 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(cnpj: string): Promise<User> {
+    return new User({
+      company_name: 'Company name',
+      fantasy_name: 'Fantasy name',
+      cnpj,
+      local: 1,
+      active: 1,
+      opening_date: new Date(),
+      password: undefined,
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

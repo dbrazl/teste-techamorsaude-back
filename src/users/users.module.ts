@@ -24,5 +24,6 @@ import { UsersSQLiteErrorHandler } from './users.error-handler';
       useExisting: UsersSQLiteErrorHandler,
     },
   ],
+  exports: [UsersService],
 })
 export class UsersModule {}

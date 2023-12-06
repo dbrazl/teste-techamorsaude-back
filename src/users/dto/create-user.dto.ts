@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
-import { Active, Local } from '../entities/user.entity';
+import { Local } from '../entities/user.entity';
 
 export class CreateUserDto {
   @IsNotEmpty()
