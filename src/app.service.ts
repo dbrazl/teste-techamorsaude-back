@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { HealthAppDto, Status } from './health-app.dto';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  health(): HealthAppDto {
+    return {
+      status: Status.ON,
+    };
   }
 }
