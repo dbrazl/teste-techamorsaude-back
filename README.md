@@ -13,8 +13,15 @@
 ## Descrição
 
 Esse é o back-end desenvolvido para o teste prático da Amor Saúde.
+</br>
+A documentação se encontra no link: [Documentação Techamorsaude](https://documenter.getpostman.com/view/9868741/2s9YkgC4cN)
 
 ## Arquitetura
+
+Para o desenvolvimento do projeto, foi utilizado a Clean Architeture na estruturação do projeto.
+</br>
+Serviços como Repositórios, Manipuladores de errors e estratégias de autenticação, foram desenvolvidos utilizando inversão de dependências para flexibilizar o sistema. O que promove a manutenabilidade.
+</br>
 
 **Imagem 1 - Diagrama de classes**
 
