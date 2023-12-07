@@ -70,8 +70,11 @@ O projeto foi desenvolvido com o framework NestJs. Para o banco de dados, com in
   <a href="https://nestjs.com/">
     <img src="https://camo.githubusercontent.com/5f54c0817521724a2deae8dedf0c280a589fd0aa9bffd7f19fa6254bb52e996a/68747470733a2f2f6e6573746a732e636f6d2f696d672f6c6f676f2d736d616c6c2e737667" width="70" alt="Nest.js logo">
   </a>
+  &nbsp;
+  &nbsp;
+  &nbsp;
   <a href="https://www.sqlite.org/index.html">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/1200px-SQLite370.svg.png" width="150" style="margin-left: 20px" alt="SQLite logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/1200px-SQLite370.svg.png" width="150" alt="SQLite logo">
   </a>
 </p>
 
