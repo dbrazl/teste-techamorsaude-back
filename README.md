@@ -20,18 +20,60 @@ A documentação se encontra no link: [Documentação Techamorsaude](https://doc
 
 Para o desenvolvimento do projeto, foi utilizado a Clean Architeture na estruturação do projeto.
 </br>
-Serviços como Repositórios, Manipuladores de errors e estratégias de autenticação, foram desenvolvidos utilizando inversão de dependências para flexibilizar o sistema. O que promove a manutenabilidade.
+
+**Imagem 1 - The Clean Architeture**
+
+<p align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/0*iU9Ks05_GTtGh6zV.jpg" width="600" alt="Clean Architeture" />
+  <p>Autor: Robert C. Martin</p>
+</p>
 </br>
 
-**Imagem 1 - Diagrama de classes**
+Serviços como repositórios e manipuladores de errors, foram desenvolvidos utilizando inversão de dependências para flexibilizar o sistema. O que promove a manutenabilidade.
+
+**Imagem 2 - Exemplo de inversão de dependências**
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/DIPLayersPattern.png" alt="Exemplo de inversão de dependências" />
+  <p>Fonte: Wikepédia. Disponível em: https://pt.wikipedia.org/wiki/Princ%C3%ADpio_da_invers%C3%A3o_de_depend%C3%AAncia</p>
+</p>
+</br>
+
+A arquitetura da solução foi desenhada utilizando diagramas da UML e o diagrama de entidadade e relacionamento, respeitando a opinião das tecnologias usadas e a Clean Architeture.
+
+**Imagem 3 - Diagrama de classes**
 
 <img src="https://amor-saude.s3.amazonaws.com/Entities+class+diagram.jpg" alt="Diagrama de classes" />
-
+<p>Autor: Daniel Braz</p>
 <br/>
 
-**Imagem 2 - Diagrama de Entidade e Relacionamento**
+**Imagem 4 - Diagrama de Entidade e Relacionamento**
 
 <img src="https://amor-saude.s3.amazonaws.com/Diagrama+de+entidade+e++relacionamentos.jpg" alt="Diagrama de entidades e relacionamentos" />
+<p>Autor: Daniel Braz</p>
+</br>
+
+Para a comunicação, foi escolhido o estilo de design de comunicação REST com transporte de pacotes de dados em formato JSON.
+
+**Imagem 5 - Protocolo REST**
+
+<p align="center">
+  <img src="https://www.hostinger.com.br/tutoriais/wp-content/uploads/sites/12/2022/02/Rest-API.webp" width="600" alt="Protocolo REST" />
+  <p>Fonte: Hostinger. Disponível em: https://www.hostinger.com.br/tutoriais/api-restful</p>
+</p>
+</br>
+
+## Tecnologias
+
+O projeto foi desenvolvido com o framework NestJs. Para o banco de dados, com intuito de teste, foi utilizado o SQLite.
+
+<p align="center">
+  <a href="https://nestjs.com/">
+    <img src="https://camo.githubusercontent.com/5f54c0817521724a2deae8dedf0c280a589fd0aa9bffd7f19fa6254bb52e996a/68747470733a2f2f6e6573746a732e636f6d2f696d672f6c6f676f2d736d616c6c2e737667" width="70" alt="Nest.js logo">
+  </a>
+  <a href="https://www.sqlite.org/index.html">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/1200px-SQLite370.svg.png" width="150" style="margin-left: 20px" alt="SQLite logo">
+  </a>
+</p>
 
 ## Instalação
 
