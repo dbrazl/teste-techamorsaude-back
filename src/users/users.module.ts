@@ -26,6 +26,5 @@ import { FindOneUseCase } from './use-cases/find-one.use-case';
     },
     FindOneUseCase,
   ],
-  exports: [UsersService],
 })
 export class UsersModule {}

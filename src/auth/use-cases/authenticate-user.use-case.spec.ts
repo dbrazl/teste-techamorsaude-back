@@ -1,13 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../auth.service';
 import { AuthenticateUserUseCase } from '../use-cases/authenticate-user.use-case';
 import { AuthenticatedUserDto } from '../dto/authenticated-user.dto';
 import { User } from '../../users/entities/user.entity';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { UsersService } from '../../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UsersModule } from '../../users/users.module';
 import { UnauthorizedException } from '@nestjs/common';
+import { IUsersRepository } from '../../users/users.repository';
 
 const opening_date = new Date();
 
@@ -41,7 +39,7 @@ const authenticatedUserDto: AuthenticatedUserDto = {
 
 describe('AuthenticateUserUseCase', () => {
   let useCase: AuthenticateUserUseCase;
-  let usersService: UsersService;
+  let usersRepository: IUsersRepository;
   let jwtService: JwtService;
 
   beforeEach(async () => {
@@ -49,7 +47,7 @@ describe('AuthenticateUserUseCase', () => {
       providers: [
         AuthenticateUserUseCase,
         {
-          provide: UsersService,
+          provide: 'IUsersRepository',
           useValue: {
             findOne: jest.fn().mockResolvedValue(user),
           },
@@ -64,7 +62,7 @@ describe('AuthenticateUserUseCase', () => {
     }).compile();
 
     useCase = module.get<AuthenticateUserUseCase>(AuthenticateUserUseCase);
-    usersService = module.get<UsersService>(UsersService);
+    usersRepository = module.get<IUsersRepository>('IUsersRepository');
     jwtService = module.get<JwtService>(JwtService);
   });
 
@@ -81,7 +79,7 @@ describe('AuthenticateUserUseCase', () => {
     it('should called findOne', async () => {
       jest.spyOn(user, 'checkPassword').mockResolvedValue(true);
       await useCase.execute(loginUserDto);
-      expect(usersService.findOne).toHaveBeenCalledWith(loginUserDto.cnpj);
+      expect(usersRepository.findOne).toHaveBeenCalledWith(loginUserDto.cnpj);
     });
 
     it('should called checkPassword', async () => {
@@ -102,7 +100,7 @@ describe('AuthenticateUserUseCase', () => {
     });
 
     it('should throw a exception when findOne fails', () => {
-      jest.spyOn(usersService, 'findOne').mockRejectedValueOnce(new Error());
+      jest.spyOn(usersRepository, 'findOne').mockRejectedValueOnce(new Error());
       expect(useCase.execute(loginUserDto)).rejects.toThrow();
     });
 
@@ -112,7 +110,7 @@ describe('AuthenticateUserUseCase', () => {
     });
 
     it('should throw a UnauthorizedException because user not exist', () => {
-      jest.spyOn(usersService, 'findOne').mockResolvedValueOnce(null);
+      jest.spyOn(usersRepository, 'findOne').mockResolvedValueOnce(null);
       expect(useCase.execute(loginUserDto)).rejects.toThrow(
         UnauthorizedException,
       );

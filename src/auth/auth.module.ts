@@ -6,21 +6,34 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticateUserUseCase } from './use-cases/authenticate-user.use-case';
-import { UsersModule } from 'src/users/users.module';
+import { UsersTypeORMRepository } from '../users/users.repository';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([User]),
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-      },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: configService.get('JWT_EXPIRES_IN'),
+        },
+      }),
+      inject: [ConfigService],
     }),
-    UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthenticateUserUseCase],
+  providers: [
+    AuthService,
+    AuthenticateUserUseCase,
+    UsersTypeORMRepository,
+    {
+      provide: 'IUsersRepository',
+      useExisting: UsersTypeORMRepository,
+    },
+  ],
 })
 export class AuthModule {}

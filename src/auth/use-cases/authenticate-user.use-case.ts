@@ -3,12 +3,12 @@ import { AuthenticatedUserDto } from '../dto/authenticated-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../../users/entities/user.entity';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { UsersService } from '../../users/users.service';
+import { IUsersRepository } from '../../users/users.repository';
 
 @Injectable()
 export class AuthenticateUserUseCase {
-  @Inject()
-  private readonly usersService: UsersService;
+  @Inject('IUsersRepository')
+  private readonly usersRepository: IUsersRepository;
 
   @Inject()
   private readonly jwtService: JwtService;
@@ -16,7 +16,7 @@ export class AuthenticateUserUseCase {
   async execute(input: LoginUserDto): Promise<AuthenticatedUserDto> {
     try {
       const { cnpj, password } = input;
-      const user = await this.usersService.findOne(cnpj);
+      const user = await this.usersRepository.findOne(cnpj);
 
       if (!user) {
         throw new Error('User not exist');
@@ -40,9 +40,19 @@ export class AuthenticateUserUseCase {
         password: undefined,
       });
 
+      const plainObject = {
+        company_name,
+        fantasy_name,
+        cnpj,
+        local,
+        opening_date,
+        active,
+        password: undefined,
+      };
+
       return {
         user: userResponse,
-        token: this.jwtService.sign(userResponse),
+        token: this.jwtService.sign(plainObject),
       };
     } catch (error) {
       if (error.message === 'User not exist') {
