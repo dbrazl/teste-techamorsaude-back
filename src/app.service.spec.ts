@@ -7,39 +7,25 @@ const healthAppDto: HealthAppDto = {
   status: Status.ON,
 };
 
-describe('AppController', () => {
-  let controller: AppController;
+describe('AppService', () => {
   let service: AppService;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [
-        {
-          provide: AppService,
-          useValue: {
-            health: jest.fn().mockReturnValue(healthAppDto),
-          },
-        },
-      ],
+      providers: [AppService],
     }).compile();
 
-    controller = app.get<AppController>(AppController);
     service = app.get<AppService>(AppService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   describe('health', () => {
-    it('should called health', () => {
-      controller.health();
-      expect(service.health).toHaveBeenCalledWith();
-    });
-
     it('should return status successfuly', () => {
-      const result = controller.health();
+      const result = service.health();
       expect(result).toEqual(healthAppDto);
     });
   });
