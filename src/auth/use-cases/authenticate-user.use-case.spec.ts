@@ -4,8 +4,8 @@ import { AuthenticatedUserDto } from '../dto/authenticated-user.dto';
 import { User } from '../../users/entities/user.entity';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UnauthorizedException } from '@nestjs/common';
 import { IUsersRepository } from '../../users/users.repository';
+import { IAuthErrorHandler } from '../auth.error-handler';
 
 const opening_date = new Date();
 
@@ -41,6 +41,7 @@ describe('AuthenticateUserUseCase', () => {
   let useCase: AuthenticateUserUseCase;
   let usersRepository: IUsersRepository;
   let jwtService: JwtService;
+  let errorHandler: IAuthErrorHandler;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -58,12 +59,19 @@ describe('AuthenticateUserUseCase', () => {
             sign: jest.fn().mockReturnValue(token),
           },
         },
+        {
+          provide: 'IAuthErrorHandler',
+          useValue: {
+            handle: jest.fn().mockReturnValue(new Error()),
+          },
+        },
       ],
     }).compile();
 
     useCase = module.get<AuthenticateUserUseCase>(AuthenticateUserUseCase);
     usersRepository = module.get<IUsersRepository>('IUsersRepository');
     jwtService = module.get<JwtService>(JwtService);
+    errorHandler = module.get<IAuthErrorHandler>('IAuthErrorHandler');
   });
 
   it('should be defined', () => {
@@ -99,27 +107,31 @@ describe('AuthenticateUserUseCase', () => {
       expect(result).toEqual(authenticatedUserDto);
     });
 
-    it('should throw a exception when findOne fails', () => {
+    it('should called handle from error handler when findOne fails', async () => {
       jest.spyOn(usersRepository, 'findOne').mockRejectedValueOnce(new Error());
-      expect(useCase.execute(loginUserDto)).rejects.toThrow();
+      await useCase.execute(loginUserDto);
+      expect(errorHandler.handle).toHaveBeenCalledWith(new Error());
     });
 
-    it('should throw a exception when checkPassword fails', () => {
+    it('should called handle from error handler when checkPassword fails', async () => {
       jest.spyOn(user, 'checkPassword').mockRejectedValueOnce(new Error());
-      expect(useCase.execute(loginUserDto)).rejects.toThrow();
+      await useCase.execute(loginUserDto);
+      expect(errorHandler.handle).toHaveBeenCalledWith(new Error());
     });
 
-    it('should throw a UnauthorizedException because user not exist', () => {
+    it('should called handle from error handler when user not exist', async () => {
       jest.spyOn(usersRepository, 'findOne').mockResolvedValueOnce(null);
-      expect(useCase.execute(loginUserDto)).rejects.toThrow(
-        UnauthorizedException,
+      await useCase.execute(loginUserDto);
+      expect(errorHandler.handle).toHaveBeenCalledWith(
+        new Error('User not exist'),
       );
     });
 
-    it('should throw a UnauthorizedException because password not match', () => {
+    it('should called handle from error handler when password not match', async () => {
       jest.spyOn(user, 'checkPassword').mockResolvedValueOnce(false);
-      expect(useCase.execute(loginUserDto)).rejects.toThrow(
-        UnauthorizedException,
+      await useCase.execute(loginUserDto);
+      expect(errorHandler.handle).toHaveBeenCalledWith(
+        new Error('Password not match'),
       );
     });
   });

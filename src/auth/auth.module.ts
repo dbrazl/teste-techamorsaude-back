@@ -9,6 +9,7 @@ import { AuthenticateUserUseCase } from './use-cases/authenticate-user.use-case'
 import { UsersTypeORMRepository } from '../users/users.repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import JwtStrategy from './strategies/jwt-strategy';
+import { AuthSQLiteErrorHandler } from './auth.error-handler';
 
 @Module({
   imports: [
@@ -35,6 +36,11 @@ import JwtStrategy from './strategies/jwt-strategy';
     {
       provide: 'IUsersRepository',
       useExisting: UsersTypeORMRepository,
+    },
+    AuthSQLiteErrorHandler,
+    {
+      provide: 'IAuthErrorHandler',
+      useExisting: AuthSQLiteErrorHandler,
     },
   ],
 })

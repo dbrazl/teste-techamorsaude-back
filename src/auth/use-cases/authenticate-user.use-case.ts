@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../../users/entities/user.entity';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { IUsersRepository } from '../../users/users.repository';
+import { IAuthErrorHandler } from '../auth.error-handler';
 
 @Injectable()
 export class AuthenticateUserUseCase {
@@ -12,6 +13,9 @@ export class AuthenticateUserUseCase {
 
   @Inject()
   private readonly jwtService: JwtService;
+
+  @Inject('IAuthErrorHandler')
+  private readonly errorHandler: IAuthErrorHandler;
 
   async execute(input: LoginUserDto): Promise<AuthenticatedUserDto> {
     try {
@@ -55,21 +59,7 @@ export class AuthenticateUserUseCase {
         token: this.jwtService.sign(plainObject),
       };
     } catch (error) {
-      if (error.message === 'User not exist') {
-        throw new UnauthorizedException(error.message, {
-          cause: error,
-          description: 'We could not found the user',
-        });
-      }
-
-      if (error.message === 'Password not match') {
-        throw new UnauthorizedException(error.message, {
-          cause: error,
-          description: 'Wrong password',
-        });
-      }
-
-      throw error;
+      this.errorHandler.handle(error);
     }
   }
 }
