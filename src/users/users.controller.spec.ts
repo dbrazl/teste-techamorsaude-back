@@ -16,6 +16,8 @@ const createdUser: User = new User({
   password: undefined,
 });
 
+const id: string = '2932880b-044d-4598-8d52-743c1378d471';
+
 describe('UsersController', () => {
   let controller: UsersController;
   let usersService: UsersService;
@@ -28,6 +30,7 @@ describe('UsersController', () => {
           provide: UsersService,
           useValue: {
             create: jest.fn().mockResolvedValue(createdUser),
+            findOne: jest.fn().mockResolvedValue(createdUser),
           },
         },
       ],
@@ -64,6 +67,23 @@ describe('UsersController', () => {
     it('should throw an exception', () => {
       jest.spyOn(usersService, 'create').mockRejectedValueOnce(new Error());
       expect(controller.create(dto)).rejects.toThrow();
+    });
+  });
+
+  describe('findOne', () => {
+    it('should called findOne', async () => {
+      await controller.findOne(id);
+      expect(usersService.findOne).toHaveBeenCalledWith(id);
+    });
+
+    it('should findOne user successfully', async () => {
+      const result = await controller.findOne(id);
+      expect(result).toEqual(createdUser);
+    });
+
+    it('should throw an exception', () => {
+      jest.spyOn(usersService, 'findOne').mockRejectedValueOnce(new Error());
+      expect(controller.findOne(id)).rejects.toThrow();
     });
   });
 });

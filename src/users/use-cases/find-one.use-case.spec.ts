@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserUseCase } from '../use-cases/create-user.use-case';
 import { User } from '../entities/user.entity';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { IUsersRepository } from '../users.repository';
 import { IUsersErrorHandler } from '../users.error-handler';
+import { FindOneUseCase } from './find-one.use-case';
 
 const opening_date = new Date();
 
-const createdUser: User = new User({
+const findedUser: User = new User({
   company_name: 'Company name',
   fantasy_name: 'Fantasy name',
   cnpj: '12345678912345',
@@ -17,19 +16,21 @@ const createdUser: User = new User({
   password: undefined,
 });
 
-describe('CreateUserUseCase', () => {
-  let useCase: CreateUserUseCase;
+findedUser['id'] = '2932880b-044d-4598-8d52-743c1378d471';
+
+describe('FindOneUseCase', () => {
+  let useCase: FindOneUseCase;
   let usersRepository: IUsersRepository;
   let usersErrorHandler: IUsersErrorHandler;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CreateUserUseCase,
+        FindOneUseCase,
         {
           provide: 'IUsersRepository',
           useValue: {
-            create: jest.fn().mockResolvedValue(createdUser),
+            findOne: jest.fn().mockResolvedValue(findedUser),
           },
         },
         {
@@ -41,7 +42,7 @@ describe('CreateUserUseCase', () => {
       ],
     }).compile();
 
-    useCase = module.get<CreateUserUseCase>(CreateUserUseCase);
+    useCase = module.get<FindOneUseCase>(FindOneUseCase);
     usersRepository = module.get<IUsersRepository>('IUsersRepository');
     usersErrorHandler = module.get<IUsersErrorHandler>('IUsersErrorHandler');
   });
@@ -51,38 +52,21 @@ describe('CreateUserUseCase', () => {
   });
 
   describe('execute', () => {
-    const user: User = new User({
-      company_name: 'Company name',
-      fantasy_name: 'Fantasy name',
-      cnpj: '12345678912345',
-      local: 1,
-      active: 1,
-      opening_date,
-      password: '123456',
+    const cnpj: string = '12345678912345';
+
+    it('should called findOne', async () => {
+      await useCase.execute(cnpj);
+      expect(usersRepository.findOne).toHaveBeenCalledWith(cnpj);
     });
 
-    const dto: CreateUserDto = {
-      company_name: 'Company name',
-      fantasy_name: 'Fantasy name',
-      cnpj: '12345678912345',
-      local: 1,
-      opening_date: opening_date.toISOString(),
-      password: '123456',
-    };
-
-    it('should called create', async () => {
-      await useCase.execute(dto);
-      expect(usersRepository.create).toHaveBeenCalledWith(user);
-    });
-
-    it('should create user successfully', async () => {
-      const result = await useCase.execute(dto);
-      expect(result).toEqual(createdUser);
+    it('should find one user successfully', async () => {
+      const result = await useCase.execute(cnpj);
+      expect(result).toEqual(findedUser);
     });
 
     it('should called handle from handle error', async () => {
-      jest.spyOn(usersRepository, 'create').mockRejectedValueOnce(new Error());
-      await useCase.execute(dto);
+      jest.spyOn(usersRepository, 'findOne').mockRejectedValueOnce(new Error());
+      await useCase.execute(cnpj);
       expect(usersErrorHandler.handle).toHaveBeenCalledWith(new Error());
     });
   });

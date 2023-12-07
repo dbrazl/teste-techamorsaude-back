@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { UsersTypeORMRepository } from './users.repository';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
 import { UsersSQLiteErrorHandler } from './users.error-handler';
+import { FindOneUseCase } from './use-cases/find-one.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -23,6 +24,7 @@ import { UsersSQLiteErrorHandler } from './users.error-handler';
       provide: 'IUsersErrorHandler',
       useExisting: UsersSQLiteErrorHandler,
     },
+    FindOneUseCase,
   ],
   exports: [UsersService],
 })

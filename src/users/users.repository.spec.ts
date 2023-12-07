@@ -3,6 +3,7 @@ import { User } from './entities/user.entity';
 import { UsersTypeORMRepository } from './users.repository';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 const today = new Date();
 
@@ -33,6 +34,7 @@ describe('UsersTypeORMRepository', () => {
           provide: getRepositoryToken(User),
           useValue: {
             save: jest.fn().mockResolvedValue(createdUser),
+            findOneByOrFail: jest.fn().mockResolvedValue(createdUser),
           },
         },
       ],
@@ -70,6 +72,25 @@ describe('UsersTypeORMRepository', () => {
     it('should throw an exception', () => {
       jest.spyOn(typeORM, 'save').mockRejectedValueOnce(new Error());
       expect(repository.create(user)).rejects.toThrow();
+    });
+  });
+
+  describe('findOne', () => {
+    const cnpj: string = '12345678912345';
+
+    it('should called findOneByOrFail', async () => {
+      await repository.findOne(cnpj);
+      expect(typeORM.findOneByOrFail).toHaveBeenCalledWith({ cnpj });
+    });
+
+    it('should find one user successfully', async () => {
+      const result = await repository.findOne(cnpj);
+      expect(result).toEqual(createdUser);
+    });
+
+    it('should throw an exception', () => {
+      jest.spyOn(typeORM, 'findOneByOrFail').mockRejectedValueOnce(new Error());
+      expect(repository.findOne(cnpj)).rejects.toThrow(NotFoundException);
     });
   });
 });
