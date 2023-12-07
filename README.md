@@ -34,7 +34,7 @@ Serviços como repositórios e manipuladores de errors, foram desenvolvidos util
 **Imagem 2 - Exemplo de inversão de dependências**
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/DIPLayersPattern.png" alt="Exemplo de inversão de dependências" />
-  <p>Fonte: Wikepédia. Disponível em: https://pt.wikipedia.org/wiki/Princ%C3%ADpio_da_invers%C3%A3o_de_depend%C3%AAncia</p>
+  <p>Fonte: Wikipedia. Disponível em: https://pt.wikipedia.org/wiki/Princ%C3%ADpio_da_invers%C3%A3o_de_depend%C3%AAncia</p>
 </p>
 </br>
 
