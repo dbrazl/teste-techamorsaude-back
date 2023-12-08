@@ -9,3 +9,8 @@ Ao finalizar a requisição, espera-se que o seu usuário tenha sido criado corr
 **Image 1 - Diagrama de caso de uso do cliente**
 
 <img src="https://amor-saude.s3.amazonaws.com/Casos+de+uso+cliente.jpg" width="500" alt="Diagrama de caso de uso do cliente">
+
+
+## Restrições
+
+- O usuário deve ser único. Logo dois usuários não podem ter o mesmo CNPJ.
