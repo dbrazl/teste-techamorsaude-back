@@ -101,6 +101,8 @@ $ yarn run start:prod
 
 ## Testes
 
+Foram elaborado testes de unidade para todas as classes do projeto. Mas é necessário a criação de testes end to end.
+
 ```bash
 # unit tests
 $ yarn run test
