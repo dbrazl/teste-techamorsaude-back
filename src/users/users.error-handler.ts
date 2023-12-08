@@ -15,7 +15,7 @@ export class UsersSQLiteErrorHandler implements IUsersErrorHandler {
     if (error.message.includes('UNIQUE constraint')) {
       throw new UnauthorizedException(error.message, {
         cause: error,
-        description: 'Some fields has unique constrain',
+        description: 'User already exist',
       });
     }
   }
