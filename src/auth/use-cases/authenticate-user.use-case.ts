@@ -54,10 +54,12 @@ export class AuthenticateUserUseCase {
         password: undefined,
       };
 
-      return {
+      const response: AuthenticatedUserDto = new AuthenticatedUserDto({
         user: userResponse,
         token: this.jwtService.sign(plainObject),
-      };
+      });
+
+      return response;
     } catch (error) {
       this.errorHandler.handle(error);
     }
