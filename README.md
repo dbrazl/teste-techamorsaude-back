@@ -44,7 +44,7 @@ A arquitetura da solução foi desenhada utilizando diagramas da UML e o diagram
 
 **Imagem 3 - Diagrama de classes**
 
-<img src="https://amor-saude.s3.amazonaws.com/Diagrama+de+classes.jpg" alt="Diagrama de classes" />
+<img src="https://amor-saude.s3.amazonaws.com/Diagrama+de+classes+v3.jpg" alt="Diagrama de classes" />
 <p>Autor: Daniel Braz</p>
 <br/>
 
