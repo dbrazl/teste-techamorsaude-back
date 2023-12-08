@@ -68,7 +68,7 @@ Para a comunicação, foi escolhido o estilo de design de comunicação REST com
 
 ## Tecnologias
 
-O projeto foi desenvolvido com o framework NestJs. Para o banco de dados, com intuito de teste, foi utilizado o SQLite.
+O projeto foi desenvolvido com o framework NestJs. Para o banco de dados, com intuito de teste, foi utilizado o SQLite. Já a conexão e transações com o banco de dados, é feita pelo TypeORM.
 
 <p align="center">
   <a href="https://nestjs.com/">
@@ -79,6 +79,12 @@ O projeto foi desenvolvido com o framework NestJs. Para o banco de dados, com in
   &nbsp;
   <a href="https://www.sqlite.org/index.html">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/1200px-SQLite370.svg.png" width="150" alt="SQLite logo">
+  </a>
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  <a href="https://typeorm.io/">
+    <img src="https://raw.githubusercontent.com/typeorm/typeorm/master/resources/logo_big.png" width="150" alt="SQLite logo">
   </a>
 </p>
 
