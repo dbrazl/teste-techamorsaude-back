@@ -4,9 +4,9 @@
 
   <p align="center">Levar um atendimento médico e odontológico de qualidade e humanizado à população brasileira.</p>
 <p align="center">
-  <a href="" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+  <a href="" target="_blank"><img src="https://img.shields.io/badge/yarn-v1.22.19-blue" alt="NPM Version" /></a>
   <a href="" target="_blank"><img src="https://img.shields.io/badge/license-MIT-yellow" alt="Package License" /></a>
-  <a href="" target="_blank"><img src="https://img.shields.io/badge/coverage-71%25-green5" alt="Coverage" /></a>
+  <a href="" target="_blank"><img src="https://img.shields.io/badge/coverage-96%25-green5" alt="Coverage" /></a>
   <a href="" target="_blank"><img src="https://img.shields.io/badge/backers-1-red" alt="Backers on Open Collective" /></a>
 </p>
 
