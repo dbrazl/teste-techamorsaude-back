@@ -77,8 +77,4 @@ export class User {
   async checkPassword(attempt: string): Promise<boolean> {
     return await compare(attempt, this.hash_password);
   }
-
-  getUserSpecialties(): any[] {
-    return [];
-  }
 }
