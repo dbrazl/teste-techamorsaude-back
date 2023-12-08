@@ -18,6 +18,20 @@ const createdUser: User = new User({
 
 const id: string = '2932880b-044d-4598-8d52-743c1378d471';
 
+const findedUser: User = new User({
+  company_name: 'Company name',
+  fantasy_name: 'Fantasy name',
+  cnpj: '12345678912345',
+  local: 1,
+  active: 1,
+  opening_date,
+  password: undefined,
+});
+
+findedUser['id'] = '2932880b-044d-4598-8d52-743c1378d471';
+
+const allUsers: User[] = new Array(10).fill(findedUser);
+
 describe('UsersController', () => {
   let controller: UsersController;
   let usersService: UsersService;
@@ -31,6 +45,7 @@ describe('UsersController', () => {
           useValue: {
             create: jest.fn().mockResolvedValue(createdUser),
             findOne: jest.fn().mockResolvedValue(createdUser),
+            findAll: jest.fn().mockResolvedValue(allUsers),
           },
         },
       ],
@@ -84,6 +99,23 @@ describe('UsersController', () => {
     it('should throw an exception', () => {
       jest.spyOn(usersService, 'findOne').mockRejectedValueOnce(new Error());
       expect(controller.findOne(id)).rejects.toThrow();
+    });
+  });
+
+  describe('findAll', () => {
+    it('should called findAll', async () => {
+      await controller.findAll();
+      expect(usersService.findAll).toHaveBeenCalled();
+    });
+
+    it('should find all user successfully', async () => {
+      const result = await controller.findAll();
+      expect(result).toEqual(allUsers);
+    });
+
+    it('should throw an exception', () => {
+      jest.spyOn(usersService, 'findAll').mockRejectedValueOnce(new Error());
+      expect(controller.findAll()).rejects.toThrow();
     });
   });
 });

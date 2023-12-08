@@ -6,6 +6,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 export interface IUsersRepository {
   create(user: User): Promise<User>;
   findOne(cnpj: string): Promise<User>;
+  findAll(): Promise<User[]>;
 }
 
 @Injectable()
@@ -26,5 +27,9 @@ export class UsersTypeORMRepository implements IUsersRepository {
         description: 'User is not founded',
       });
     }
+  }
+
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
   }
 }

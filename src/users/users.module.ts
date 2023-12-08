@@ -7,6 +7,7 @@ import { UsersTypeORMRepository } from './users.repository';
 import { CreateUserUseCase } from './use-cases/create-user.use-case';
 import { UsersSQLiteErrorHandler } from './users.error-handler';
 import { FindOneUseCase } from './use-cases/find-one.use-case';
+import { FindAllUseCase } from './use-cases/find-all.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -25,6 +26,7 @@ import { FindOneUseCase } from './use-cases/find-one.use-case';
       useExisting: UsersSQLiteErrorHandler,
     },
     FindOneUseCase,
+    FindAllUseCase,
   ],
 })
 export class UsersModule {}
