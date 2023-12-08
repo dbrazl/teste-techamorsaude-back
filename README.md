@@ -42,7 +42,7 @@ A arquitetura da solução foi desenhada utilizando diagramas da UML e o diagram
 
 **Imagem 3 - Diagrama de classes**
 
-<img src="https://amor-saude.s3.amazonaws.com/Entities+class+diagram.jpg" alt="Diagrama de classes" />
+<img src="https://amor-saude.s3.amazonaws.com/Diagrama+de+classes.jpg" alt="Diagrama de classes" />
 <p>Autor: Daniel Braz</p>
 <br/>
 
@@ -61,6 +61,8 @@ Para a comunicação, foi escolhido o estilo de design de comunicação REST com
   <p>Fonte: Hostinger. Disponível em: https://www.hostinger.com.br/tutoriais/api-restful</p>
 </p>
 </br>
+
+**Atenção:** Devido a correria do meu dia a dia, não foi implementado a entidade de especialidade médica e o relacionamento de muitos para muitos com os usuários.
 
 ## Tecnologias
 
