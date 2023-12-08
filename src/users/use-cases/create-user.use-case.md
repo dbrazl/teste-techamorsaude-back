@@ -13,4 +13,5 @@ Ao finalizar a requisição, espera-se que o seu usuário tenha sido criado corr
 
 ## Restrições
 
+- O formulário enviado deve estar correto;
 - O usuário deve ser único. Logo dois usuários não podem ter o mesmo CNPJ.
