@@ -15,6 +15,8 @@
 Esse é o back-end desenvolvido para o teste prático da Amor Saúde.
 </br>
 A documentação se encontra no link: [Documentação Techamorsaude](https://documenter.getpostman.com/view/9868741/2s9YkgC4cN)
+</br>
+Os casos de usos também estão documentados. Acesse a documentação pelos arquivos .md na camada de use-cases de cada módulo.
 
 ## Arquitetura
 
